@@ -33,7 +33,7 @@ function createClient() {
     }
 }
 
-const EIGHT_S_TO_MS = 8 / 1000
+const EIGHT_S_TO_MS = 8 * 1000
 const chatIdToPreviousSentTimestamp = {}
 
 const allowedToSendToChatAlready = id => {
