@@ -14,6 +14,7 @@ client.onText(/\/cams/, camsCommand)
 
 
 function createClient() {
+    console.log(`HEROKU_APP_NAME: ${process.env.HEROKU_APP_NAME}, WEBHOOK_PORT: ${process.env.WEBHOOK_PORT}`)
     if (process.env.HEROKU_APP_NAME) {
         const client = new TgClient(TG_API_TOKEN, {
             webHook: {
