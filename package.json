@@ -1,0 +1,22 @@
+{
+  "name": "inspirobot",
+  "version": "0.3.0",
+  "description": "Inspiring quotes for your day",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cxcorp",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "dotenv": "4.0.0",
+    "node-fetch": "1.7.1",
+    "node-telegram-bot-api": "0.27.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
