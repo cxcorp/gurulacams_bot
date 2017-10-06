@@ -34,11 +34,16 @@ function createClient() {
 }
 
 const EIGHT_S_TO_MS = 8 * 1000
+const getTimestamp = () => new Date().getTime()
 const chatIdToPreviousSentTimestamp = {}
 
 const allowedToSendToChatAlready = id => {
     const prevTimestamp = chatIdToPreviousSentTimestamp[id]
-    if (!prevTimestamp) return true
+    chatIdToPreviousSentTimestamp[id] = getTimestamp()
+
+    if (!prevTimestamp) {
+        return true
+    }
 
     const now = new Date()
     return (now - prevTimestamp) >= EIGHT_S_TO_MS
