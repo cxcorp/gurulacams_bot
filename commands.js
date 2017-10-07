@@ -1,24 +1,8 @@
 const cacheBuster = require('./cache-buster')
+const { allowedToSendToChatAlready } = require('./flood-control')
 
 const IMAGE_URLS = ['http://haba.tko-aly.fi/kuvat/webcam1.jpg', 'http://haba.tko-aly.fi/kuvat/webcam2.jpg']
 const EIGHT_S_TO_MS = 8 * 1000
-
-const getTimestamp = () => new Date().getTime()
-const chatIdToPreviousSentTimestamp = {}
-
-const allowedToSendToChatAlready = id => {
-    if (process.env.NODE_ENV === 'debug') return true
-
-    const prevTimestamp = chatIdToPreviousSentTimestamp[id]
-    chatIdToPreviousSentTimestamp[id] = getTimestamp()
-
-    if (!prevTimestamp) {
-        return true
-    }
-
-    const now = new Date()
-    return (now - prevTimestamp) >= EIGHT_S_TO_MS
-}
 
 const createSendPhoto = tgClient => (chatId, imageUrl) => tgClient.sendPhoto(chatId, imageUrl)
 const concatCacheBuster = cacheBuster(EIGHT_S_TO_MS)
