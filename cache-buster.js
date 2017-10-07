@@ -6,11 +6,11 @@ module.exports = allowedCacheTimeMs => {
         return now - (now % allowedCacheTimeMs)
     }
 
-    return function concatCacheBuster(url) {
+    return function getCacheBuster(url) {
         // If we always send the same URL, telegram will always use the cached photo.
-        // Concatenate a meaningless parameter to bust the cache. However,
+        // We concatenate a meaningless parameter to bust the cache. However,
         // we allow a cache lifetime of `allowedCacheTimeMs` by keeping the URL
         // the same for that duration.
-        return `${url}?plz_telegram_no_cache=${getSteppedTimestamp()}`
+        return `plz_telegram_no_cache=${getSteppedTimestamp()}`
     }
 }

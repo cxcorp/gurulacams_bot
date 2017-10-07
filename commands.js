@@ -5,8 +5,8 @@ const IMAGE_URLS = ['http://haba.tko-aly.fi/kuvat/webcam1.jpg', 'http://haba.tko
 const EIGHT_S_TO_MS = 8 * 1000
 
 const createSendPhoto = tgClient => (chatId, imageUrl) => tgClient.sendPhoto(chatId, imageUrl)
-const concatCacheBuster = cacheBuster(EIGHT_S_TO_MS)
-const getImageUrls = () => IMAGE_URLS.map(concatCacheBuster)
+const getCacheBuster = cacheBuster(EIGHT_S_TO_MS)
+const getImageUrls = () => IMAGE_URLS.map(url => `${url}?${getCacheBuster()}`)
 
 function createCamsCommand(tgClient) {
     const sendPhoto = createSendPhoto(tgClient)
