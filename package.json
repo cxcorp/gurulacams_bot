@@ -1,7 +1,7 @@
 {
-  "name": "inspirobot",
-  "version": "0.3.0",
-  "description": "Inspiring quotes for your day",
+  "name": "gurulacams_bot",
+  "version": "0.2.0",
+  "description": "Spam gurulacams into your Telegram chats.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
