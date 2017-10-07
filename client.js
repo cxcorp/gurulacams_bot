@@ -3,14 +3,12 @@ const TgClient = require('node-telegram-bot-api')
 
 const createWebhookClient = (apiToken, webhook) => {
     console.log('Creating webhook client')
-    
+
     const { url, port } = webhook
     console.log(`Webhook port: ${port}`)
-    
+
     const client = new TgClient(apiToken, {
-        webHook: {
-            port: port
-        }
+        webHook: { port }
     })
     client.setWebHook(url)
     return client
