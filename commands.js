@@ -1,3 +1,5 @@
+const cacheBuster = require('./cache-buster')
+
 const IMAGE_URLS = ['http://haba.tko-aly.fi/kuvat/webcam1.jpg', 'http://haba.tko-aly.fi/kuvat/webcam2.jpg']
 const EIGHT_S_TO_MS = 8 * 1000
 
@@ -19,7 +21,7 @@ const allowedToSendToChatAlready = id => {
 }
 
 const createSendPhoto = tgClient => (chatId, imageUrl) => tgClient.sendPhoto(chatId, imageUrl)
-const concatCacheBuster = url => `${url}?telegram_plz_no_cache=${new Date().getTime()}`
+const concatCacheBuster = cacheBuster(EIGHT_S_TO_MS)
 const getImageUrls = () => IMAGE_URLS.map(concatCacheBuster)
 
 function createCamsCommand(tgClient) {
