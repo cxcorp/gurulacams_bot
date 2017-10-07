@@ -11,9 +11,7 @@
   "author": "cxcorp",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "dotenv": "4.0.0",
-    "node-fetch": "1.7.1",
     "node-telegram-bot-api": "0.27.1"
   },
   "devDependencies": {
