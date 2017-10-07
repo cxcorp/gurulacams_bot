@@ -3,15 +3,12 @@ const chatIdToPreviousSentTimestamp = {}
 
 function allowedToSendToChatAlready(id) {
     if (process.env.NODE_ENV === 'debug') return true
+    const now = getTimestamp()
 
     const prevTimestamp = chatIdToPreviousSentTimestamp[id]
-    chatIdToPreviousSentTimestamp[id] = getTimestamp()
+    chatIdToPreviousSentTimestamp[id] = now
 
-    if (!prevTimestamp) {
-        return true
-    }
-
-    const now = new Date()
+    if (!prevTimestamp) return true
     return (now - prevTimestamp) >= EIGHT_S_TO_MS
 }
 
