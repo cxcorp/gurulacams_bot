@@ -32,15 +32,15 @@ function doWithLoadingMessage(tgClient, chatId, action) {
 }
 
 function fetchAndConvertPhoto() { // () => Promise<Buffer>
-    var canvas = new Jimp(1920, 2160)
-    var above_pic = Jimp.read(IMAGE_URLS[0]);
-    var below_pic = Jimp.read(IMAGE_URLS[1]);
+    const canvasPromise = new Jimp(1920, 2160)
+    const abovePicPromise = Jimp.read(IMAGE_URLS[0]);
+    const belowPicPromise = Jimp.read(IMAGE_URLS[1]);
 
-    return Promise.all([canvas, above_pic, below_pic])
-        .then(images => {
-            return images[0]
-                .composite(images[1], 0, 0)
-                .composite(images[2], 0, 1080)
+    return Promise.all([canvasPromise, abovePicPromise, belowPicPromise])
+        .then(([canvas, abovePic, belowPic]) => {
+            return canvas
+                .composite(abovePic, 0, 0)
+                .composite(belowPic, 0, 1080)
                 .resize(960, 1080)
                 .quality(60)
                 .getBufferAsync(Jimp.MIME_PNG)
