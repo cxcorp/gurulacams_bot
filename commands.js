@@ -1,4 +1,3 @@
-const cacheBuster = require('./cache-buster')
 const { allowedToSendToChatAlready } = require('./flood-control')
 const Jimp = require("jimp")
 const IMAGE_URLS = ['http://haba.tko-aly.fi/kuvat/webcam1.jpg', 'http://haba.tko-aly.fi/kuvat/webcam2.jpg']
