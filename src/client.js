@@ -1,4 +1,3 @@
-'use strict'
 const TgClient = require('node-telegram-bot-api')
 
 const createWebhookClient = (apiToken, webhook) => {

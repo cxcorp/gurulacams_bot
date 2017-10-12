@@ -1,4 +1,3 @@
-'use strict'
 const { createClient } = require('./client')
 const { attachCommands } = require('./commands')
 require('dotenv').config()
