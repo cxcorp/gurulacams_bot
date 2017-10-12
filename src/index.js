@@ -5,7 +5,7 @@ require('dotenv').config()
 const TG_API_TOKEN = process.env.TG_API_TOKEN
 const WEBHOOK_PORT = parseInt(process.env.PORT || '1234', 10)
 
-console.log(`Starting bot`)
+console.log('Starting bot')
 
 const opts = { apiToken: TG_API_TOKEN }
 if (process.env.HEROKU_APP_NAME) {
