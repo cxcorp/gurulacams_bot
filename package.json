@@ -2,10 +2,10 @@
   "name": "gurulacams_bot",
   "version": "0.2.0",
   "description": "Spam gurulacams into your Telegram chats.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "start": "node src/index.js",
+    "watch": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "cxcorp",
