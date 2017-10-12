@@ -8,12 +8,27 @@ const IMAGE_URLS = ['http://haba.tko-aly.fi/kuvat/webcam1.jpg', 'http://haba.tko
 const EIGHT_S_TO_MS = 8 * 1000
 
 function createCamsCommand(tgClient) {
-    const sender = new CachingImageSender(tgClient, fetchAndConvertPhoto, EIGHT_S_TO_MS)
+    const camsSender = new CachingImageSender(tgClient, fetchAndConvertPhoto, EIGHT_S_TO_MS)
 
     return msg => {
-        if (!allowedToSendToChatAlready(msg.chat.id)) return
-        sender.send(msg.chat.id)
+        const chatId = msg.chat.id
+        if (!allowedToSendToChatAlready(chatId)) return
+
+        doWithLoadingMessage(tgClient, chatId, () => camsSender.send(chatId))
     }
+}
+
+// Send a "Loading..." message, then remove it after the action has finished
+// doWithLoadingMessage(tgClient: TelegramClient, chatId: string, action: () => Thenable<void>)
+function doWithLoadingMessage(tgClient, chatId, action) {
+    const opts = {
+        parse_mode: 'markdown',
+        disable_notification: true
+    }
+
+    tgClient.sendMessage(chatId, '_Loading..._', opts).then(loadingMsg => {
+        action().then(() => tgClient.deleteMessage(chatId, loadingMsg.message_id))
+    })
 }
 
 function fetchAndConvertPhoto() { // () => Promise<Buffer>
