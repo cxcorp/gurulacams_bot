@@ -1,6 +1,5 @@
 const Promise = require('bluebird')
-
-const timestamp = () => new Date().getTime()
+const { maxByProp, timestamp } = require('./util')
 
 // type FileId = string
 // type Photo = string | Buffer | Stream
@@ -43,9 +42,16 @@ class CachingImageSender {
 
         return Promise.resolve(this.payload)
             .then(replaceWithOrUpdateCache)
-            .then(payload => this.tgClient.sendPhoto(chatId, payload))
-            .then(fileId => {
-                this.payload = fileId
+            .then(payload => {
+                console.log('payload: ', payload)
+                return this.tgClient.sendPhoto(chatId, payload)
+            })
+            .then(tgResponse => {
+                // TG has all kinds of thumbnails in the photo array, find the
+                // biggest one. We can just compare heights since they all have the same
+                // aspect ratio.
+                const biggestPhoto = maxByProp(tgResponse.photo, photo => photo.height)
+                this.payload = biggestPhoto.file_id
             })
     }
 }
