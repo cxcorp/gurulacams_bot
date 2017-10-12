@@ -42,10 +42,7 @@ class CachingImageSender {
 
         return Promise.resolve(this.payload)
             .then(replaceWithOrUpdateCache)
-            .then(payload => {
-                console.log('payload: ', payload)
-                return this.tgClient.sendPhoto(chatId, payload)
-            })
+            .then(payload => this.tgClient.sendPhoto(chatId, payload))
             .then(tgResponse => {
                 // TG has all kinds of thumbnails in the photo array, find the
                 // biggest one. We can just compare heights since they all have the same
