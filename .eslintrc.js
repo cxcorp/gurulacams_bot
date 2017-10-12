@@ -249,7 +249,7 @@ module.exports = {
         "sort-imports": "error",
         "sort-keys": [
             "error",
-            "desc"
+            "asc"
         ],
         "sort-vars": "error",
         "space-before-blocks": "error",
