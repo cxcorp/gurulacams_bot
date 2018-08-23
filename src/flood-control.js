@@ -10,7 +10,7 @@ function allowedToSendToChatAlready(id) {
     chatIdToPreviousSentTimestamp[id] = now
 
     if (!prevTimestamp) return true
-    return (now - prevTimestamp) >= EIGHT_S_TO_MS
+    return now - prevTimestamp >= EIGHT_S_TO_MS
 }
 
 module.exports = { allowedToSendToChatAlready }

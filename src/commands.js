@@ -1,14 +1,21 @@
 const util = require('util')
 const { allowedToSendToChatAlready } = require('./flood-control')
 const { CachingImageSender } = require('./caching-image-sender')
-const Jimp = require("jimp")
+const Jimp = require('jimp')
 Jimp.prototype.getBufferAsync = util.promisify(Jimp.prototype.getBuffer)
 
-const IMAGE_URLS = ['http://haba.tko-aly.fi/kuvat/webcam1.jpg', 'http://haba.tko-aly.fi/kuvat/webcam2.jpg']
+const IMAGE_URLS = [
+    'http://haba.tko-aly.fi/kuvat/webcam1.jpg',
+    'http://haba.tko-aly.fi/kuvat/webcam2.jpg'
+]
 const EIGHT_S_TO_MS = 8 * 1000
 
 function createCamsCommand(tgClient) {
-    const camsSender = new CachingImageSender(tgClient, fetchAndConvertPhoto, EIGHT_S_TO_MS)
+    const camsSender = new CachingImageSender(
+        tgClient,
+        fetchAndConvertPhoto,
+        EIGHT_S_TO_MS
+    )
 
     return msg => {
         const chatId = msg.chat.id
@@ -31,9 +38,13 @@ async function doWithLoadingMessage(tgClient, chatId, action) {
         disable_notification: true
     }
 
-    const loadingMessage = await tgClient.sendMessage(chatId, '_Loading..._', opts);
-    await action();
-    await tgClient.deleteMessage(chatId, loadingMessage.message_id);
+    const loadingMessage = await tgClient.sendMessage(
+        chatId,
+        '_Loading..._',
+        opts
+    )
+    await action()
+    await tgClient.deleteMessage(chatId, loadingMessage.message_id)
 }
 
 /** @returns {Promise<Buffer>} */

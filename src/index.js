@@ -10,7 +10,9 @@ console.log('Starting bot')
 const opts = { apiToken: TG_API_TOKEN }
 if (process.env.HEROKU_APP_NAME) {
     opts.webhook = {
-        url: `https://${process.env.HEROKU_APP_NAME}.herokuapp.com/bot${TG_API_TOKEN}`,
+        url: `https://${
+            process.env.HEROKU_APP_NAME
+        }.herokuapp.com/bot${TG_API_TOKEN}`,
         port: WEBHOOK_PORT
     }
 }
