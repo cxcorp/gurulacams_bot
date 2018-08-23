@@ -1,6 +1,6 @@
 {
   "name": "gurulacams_bot",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "Spam gurulacams into your Telegram chats.",
   "main": "src/index.js",
   "scripts": {
