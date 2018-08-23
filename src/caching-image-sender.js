@@ -36,7 +36,7 @@ class CachingImageSender {
 
     /** @returns {Promise<void>} */
     async send(chatId) {
-        const payload = this.cacheIsValid() ? payload : await this.updateCache()
+        const payload = this.cacheIsValid() ? this.payload : await this.updateCache()
         const tgResponse = await this.tgClient.sendPhoto(chatId, payload)
 
         // TG has all kinds of thumbnails in the photo array, find the
