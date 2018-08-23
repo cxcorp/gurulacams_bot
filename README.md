@@ -7,7 +7,7 @@ Spam [gurulacams](http://gurula.wtf/cams) into your Telegram chats.
 ## Development
 1. `git clone`
 2. `cd gurulacams_bot`
-3. `npm init`
+3. `npm install` / `yarn`
 4. Rename `.env-sample` to `.env`, create a new Bot with the [BotFather](https://telegram.me/BotFather), replace token with new token
 5. `npm start` or `npm watch`
 
