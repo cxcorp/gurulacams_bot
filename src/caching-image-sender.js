@@ -1,4 +1,3 @@
-const Promise = require('bluebird')
 const { maxByProp, timestamp } = require('./util')
 
 // type FileId = string
@@ -20,36 +19,33 @@ class CachingImageSender {
         this.send = this.send.bind(this)
     }
 
-    cacheIsValid() { // () => boolean
+    /** @returns {boolean} */
+    cacheIsValid() {
         const now = timestamp()
         const age = now - this.lastUpdated
         return age < this.cacheLifetime
     }
 
-    updateCache() { // () => Promise<Photo>
-        return this.fetchPhoto()
-            .then(photo => {
-                this.lastUpdated = timestamp()
-                this.payload = photo
-                return photo
-            })
+    /** @returns {Promise<Photo>} */
+    async updateCache() {
+        const photo = await this.fetchPhoto()
+        this.lastUpdated = timestamp()
+        this.payload = photo
+        return photo
     }
 
-    send(chatId) { // Promise<void>
-        const replaceWithOrUpdateCache = payload => {
-            return this.cacheIsValid() ? payload : this.updateCache()
-        }
+    /** @returns {Promise<void>} */
+    async send(chatId) {
+        const payload = this.cacheIsValid() ? payload : await this.updateCache()
+        const tgResponse = await this.tgClient.sendPhoto(chatId, payload)
 
-        return Promise.resolve(this.payload)
-            .then(replaceWithOrUpdateCache)
-            .then(payload => this.tgClient.sendPhoto(chatId, payload))
-            .then(tgResponse => {
-                // TG has all kinds of thumbnails in the photo array, find the
-                // biggest one. We can just compare heights since they all have the same
-                // aspect ratio.
-                const biggestPhoto = maxByProp(tgResponse.photo, photo => photo.height)
-                this.payload = biggestPhoto.file_id
-            })
+        // TG has all kinds of thumbnails in the photo array, find the
+        // biggest one. We can just compare heights since they all have the same
+        // aspect ratio.
+        const biggestPhoto = maxByProp(tgResponse.photo, photo => photo.height)
+        // cache file ID so we can send that instead of uploading the buffer
+        // again if the cache is valid
+        this.payload = biggestPhoto.file_id
     }
 }
 

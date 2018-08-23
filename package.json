@@ -10,12 +10,14 @@
   "author": "cxcorp",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.5.1",
     "dotenv": "4.0.0",
-    "node-telegram-bot-api": "0.28.0",
-    "jimp": "0.2.28"
+    "jimp": "0.2.28",
+    "node-telegram-bot-api": "0.28.0"
   },
   "devDependencies": {
     "nodemon": "1.18.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
